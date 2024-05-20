@@ -16,7 +16,13 @@ def home_func(request):
             Human.objects.create(name=name, age=age, image=image)
             # data.save()
             massege = 'data added'
-    all_data = Human.objects.all()
+        search_query = request.GET.get('search')
+        
+    search_query = request.GET.get('search')
+    if search_query:
+        all_data = Human.objects.filter(name__icontains = search_query)        
+    else:
+        all_data = Human.objects.all()
     return render(request,'home.html', locals())
 
 def delete_data(request,id):
